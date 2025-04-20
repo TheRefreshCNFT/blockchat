@@ -300,7 +300,7 @@
             if (remoteConnection.localDescription) {
                 let validCandidateFound = false;
                 iceCandidates.forEach(candidate => {
-                    if (candidate.candidate.includes('typ host') && !candidate.candidate.includes('0.0.0.0')) {
+                  if (!candidate.candidate.includes('0.0.0.0')) {
                         validCandidateFound = true;
                     }
                 });
