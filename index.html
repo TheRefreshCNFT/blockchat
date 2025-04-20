@@ -259,13 +259,6 @@
             pasteAnswerButton.classList.remove('hidden');
             submitAnswerButton.classList.remove('hidden');
             offerCreated = true;
-
-            // Check for IP address 0.0.0.0
-            if (localConnection.localDescription.sdp.includes('c=IN IP4 0.0.0.0')) {
-                console.log('No connection could be established.');
-                offerText.value = ''; // Clear the offer text area
-                showConnectionIssueModal();
-            }
         };
 
         const handleJoin = async offer => {
@@ -300,28 +293,18 @@
             if (remoteConnection.localDescription) {
                 let validCandidateFound = false;
                 iceCandidates.forEach(candidate => {
-                  if (!candidate.candidate.includes('0.0.0.0')) {
-                        validCandidateFound = true;
-                    }
+                  if (
+                    candidate.candidate.includes('typ relay') &&
+                    !candidate.candidate.includes('0.0.0.0')
+                  ) {
+                    validCandidateFound = true;
+                  }
                 });
 
-                if (!validCandidateFound) {
-                    console.log('No valid candidates found in the answer.');
-                    remoteConnection.close();
-                    answerCreated = false;
-                    return;
-                }
 
                 answerOutputText.value = JSON.stringify(remoteConnection.localDescription);
                 answerOutputText.classList.remove('hidden');
                 copyAnswerButton.classList.remove('hidden');
-            }
-
-            // Check for IP address 0.0.0.0
-            if (remoteConnection.localDescription.sdp.includes('c=IN IP4 0.0.0.0')) {
-                console.log('No connection could be established.');
-                answerOutputText.value = ''; // Clear the answer text area
-                showConnectionIssueModal();
             }
         };
 
