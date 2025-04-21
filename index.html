@@ -214,16 +214,10 @@
         }; */
 
         const iceServers = {
-          iceServers: [
-            {
-              urls: 'turn:127.0.0.1:3478?transport=udp',
-              username: 'demo',
-              credential: 'turnpass'
-            }
-          ],
-          iceTransportPolicy: 'relay'
+            iceServers: [
+                { urls: 'stun:66.176.182.171:3478' }
+            ]
         };
-
 
 
         function showConnectionIssueModal() {
